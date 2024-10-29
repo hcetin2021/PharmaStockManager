@@ -20,7 +20,8 @@ public class AdminDashboardController : Controller
             TotalDrugs = _context.Drugs.Count(),
             CriticalStockDrugs = _context.Drugs.Where(d => d.Quantity < 10).ToList(),
             TotalCategories = _context.Categories.Count(),
-            TotalUsers = _context.Users.Count()
+            TotalUsers = _context.Users.Count(),
+            RecentDrugs = _context.Drugs.OrderByDescending(d => d.CreatedDate).Take(5).ToList()
         };
         return View(model);
     }

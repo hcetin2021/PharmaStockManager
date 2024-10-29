@@ -18,6 +18,10 @@ namespace PharmaStockManager.Models
         [Required]
         public int Quantity { get; set; }
 
+         public DateTime CreatedDate { get; set; } // İlaç oluşturulma tarihi
+
+        public string UserId { get; set; } // İlaç sahibi kullanıcı
+
         [Required]
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(18,2)")] // Precision and scale specified here
