@@ -1,0 +1,91 @@
+@model dynamic
+@{
+    ViewData["Title"] = "User Dashboard";
+    var userDrugs = (IEnumerable<PharmaStockManager.Models.Drug>)Model.UserDrugs;
+    var userDrugNames = userDrugs.Select(d => d.Name).ToList();
+    var userDrugQuantities = userDrugs.Select(d => d.Quantity).ToList();
+}
+
+<h2>User Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Your Drugs</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var drug in Model.UserDrugs)
+                {
+                    <tr>
+                        <td>@drug.Name</td>
+                        <td>@drug.Category</td>
+                        <td>@drug.Quantity</td>
+                        <td>@drug.UnitPrice</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h3>Your Categories</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model.UserCategories)
+                {
+                    <tr>
+                        <td>@category.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <h3>Stock Levels</h3>
+        <canvas id="stockChart"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var userDrugNames = @Html.Raw(Json.Serialize(userDrugNames));
+        var userDrugQuantities = @Html.Raw(Json.Serialize(userDrugQuantities));
+
+        var ctx = document.getElementById('stockChart').getContext('2d');
+        var stockChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: userDrugNames,
+                datasets: [{
+                    label: 'Stock Levels',
+                    data: userDrugQuantities,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}
