@@ -55,7 +55,11 @@ namespace PharmaStockManager.Controllers
         // POST: Drugs/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< Updated upstream
         public async Task<IActionResult> Create([Bind("Id,Name,Category,Quantity,UnitPrice")] Drug drug)
+=======
+        public async Task<IActionResult> Create([Bind("Id,Name,Category,Quantity,UnitPrice,DrugType,ResearchNumber")] Drug drug)
+>>>>>>> Stashed changes
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +94,11 @@ namespace PharmaStockManager.Controllers
         // POST: Drugs/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+<<<<<<< Updated upstream
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Category,Quantity,UnitPrice")] Drug drug)
+=======
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Category,Quantity,UnitPrice,DrugType,ResearchNumber")] Drug drug)
+>>>>>>> Stashed changes
         {
             if (id != drug.Id)
             {
@@ -143,7 +151,14 @@ namespace PharmaStockManager.Controllers
                     TransactionDate = DateTime.Now,
                     ExpiryDate = expiryDate,
                     Type = type, // İlacın türü
+<<<<<<< Updated upstream
                     Price = price
+=======
+                    Price = price,
+
+                    DrugType = drug.DrugType,
+                
+>>>>>>> Stashed changes
                 };
 
                 _context.Transactions.Add(transaction); // Transaction tablosuna ekle
@@ -176,7 +191,13 @@ namespace PharmaStockManager.Controllers
                     TransactionDate = DateTime.Now,
                     ExpiryDate = drug.ExpiryDate ?? DateTime.Now, // Null kontrolü yapıldı
                     Type = drug.Category, // Kategori türü
+<<<<<<< Updated upstream
                     Price = drug.UnitPrice
+=======
+                    Price = drug.UnitPrice,
+                    DrugType = drug.DrugType,
+            
+>>>>>>> Stashed changes
                 };
 
                 _context.Transactions.Add(transaction); // Transaction tablosuna ekle
@@ -238,6 +259,11 @@ namespace PharmaStockManager.Controllers
             var transactions = await _context.Transactions
                 .Include(t => t.Drug) // Join with Drug table to get drug details
                 .ToListAsync();
+
+                if (transactions == null || !transactions.Any())
+{
+            TempData["InfoMessage"] = "No transactions found.";
+}
 
             return View(transactions);
         }

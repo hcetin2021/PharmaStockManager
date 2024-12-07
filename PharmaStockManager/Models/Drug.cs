@@ -11,6 +11,14 @@ namespace PharmaStockManager.Models
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
+<<<<<<< Updated upstream
+=======
+    
+        public string DrugType { get; set; } // "Commercial" or "Clinical"
+        public string ResearchNumber { get; set; } // Only for commercial drugs
+
+    
+>>>>>>> Stashed changes
 
         [Required]
         public string Category { get; set; }

@@ -13,5 +13,9 @@ namespace PharmaStockManager.Models
         public DateTime ExpiryDate { get; set; } // Optional, if necessary
         public string Type { get; set; } // Drug type, optional
         public decimal Price { get; set; }
+
+          //Sonradan Eklenen alanlar
+        public string DrugType { get; set; }
+
     }
 }
